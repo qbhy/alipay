@@ -7,6 +7,13 @@
 
 namespace Qbhy\EasyAlipay\Kernel;
 
+/**
+ * Class EncryptParseItem
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay\Kernel
+ */
 class EncryptParseItem
 {
     public $startIndex;

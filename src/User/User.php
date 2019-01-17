@@ -10,6 +10,13 @@ namespace Qbhy\EasyAlipay\User;
 use Qbhy\EasyAlipay\Kernel\AbstractModule;
 use Qbhy\EasyAlipay\User\Requests\UserInfoShareRequest;
 
+/**
+ * Class User
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay\User
+ */
 class User extends AbstractModule
 {
     /**

@@ -10,6 +10,13 @@ namespace Qbhy\EasyAlipay\Kernel;
 use Qbhy\EasyAlipay\Alipay;
 use Qbhy\EasyAlipay\AopClient;
 
+/**
+ * Class AbstractModule
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay\Kernel
+ */
 abstract class AbstractModule
 {
     protected $app;

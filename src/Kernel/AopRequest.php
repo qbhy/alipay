@@ -10,6 +10,13 @@ namespace Qbhy\EasyAlipay\Kernel;
 use Qbhy\EasyAlipay\Exceptions\UndefinedPropertyException;
 use Qbhy\EasyAlipay\Kernel\Contracts\Request;
 
+/**
+ * Class AopRequest
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay\Kernel
+ */
 abstract class AopRequest implements Request
 {
     /**

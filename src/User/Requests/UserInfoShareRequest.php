@@ -12,6 +12,13 @@ namespace Qbhy\EasyAlipay\User\Requests;
 
 use Qbhy\EasyAlipay\Kernel\AopRequest;
 
+/**
+ * Class UserInfoShareRequest
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay\User\Requests
+ */
 class UserInfoShareRequest extends AopRequest
 {
     public function getApiName(): string

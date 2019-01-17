@@ -21,6 +21,8 @@ use Qbhy\EasyAlipay\User\User;
  * @property Tools     $tools
  * @property Payment   $payment
  *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
  * @package Qbhy\EasyAlipay
  */
 class Alipay extends Foundation

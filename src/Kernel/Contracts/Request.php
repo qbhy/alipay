@@ -7,6 +7,13 @@
 
 namespace Qbhy\EasyAlipay\Kernel\Contracts;
 
+/**
+ * Interface Request
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay\Kernel\Contracts
+ */
 interface Request
 {
     public function getApiName(): string;

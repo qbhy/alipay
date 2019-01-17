@@ -29,6 +29,8 @@ use Qbhy\EasyAlipay\Kernel\AopRequest;
  * @property  $business_params       商户传入业务信息，具体值要和支付宝约定，应用于安全，营销等参数直传场景，格式为json格式
  * @property  $receiver_address_info 收货人及地址信息
  *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
  * @package Qbhy\EasyAlipay\Payment\Requests
  */
 class TradeCreateRequest extends AopRequest

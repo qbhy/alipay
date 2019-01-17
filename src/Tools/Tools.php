@@ -10,6 +10,13 @@ namespace Qbhy\EasyAlipay\Tools;
 use Qbhy\EasyAlipay\Kernel\AbstractModule;
 use Qbhy\EasyAlipay\Tools\Requests\SystemOauthTokenRequest;
 
+/**
+ * Class Tools
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay\Tools
+ */
 class Tools extends AbstractModule
 {
     /**

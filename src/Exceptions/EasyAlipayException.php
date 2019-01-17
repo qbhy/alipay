@@ -9,6 +9,13 @@ namespace Qbhy\EasyAlipay\Exceptions;
 
 use Exception;
 
+/**
+ * Class EasyAlipayException
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay\Exceptions
+ */
 abstract class EasyAlipayException extends Exception
 {
 

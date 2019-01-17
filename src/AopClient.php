@@ -20,6 +20,13 @@ use Qbhy\EasyAlipay\Kernel\EncryptParseItem;
 use Qbhy\EasyAlipay\Kernel\Contracts\Request;
 use Qbhy\EasyAlipay\Kernel\SignData;
 
+/**
+ * Class AopClient
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay
+ */
 class AopClient extends AbstractAPI
 {
     /** @var Alipay */

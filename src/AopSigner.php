@@ -10,17 +10,31 @@ namespace Qbhy\EasyAlipay;
 use Qbhy\EasyAlipay\Exceptions\NotifyException;
 use Qbhy\EasyAlipay\Exceptions\RsaPrivateKeyException;
 use Qbhy\EasyAlipay\Exceptions\RsaPublicKeyException;
-use Qbhy\EasyAlipay\Kernel\AbstractModule;
 use Qbhy\EasyAlipay\Kernel\Contracts\Signer;
 use Qbhy\EasyAlipay\Kernel\Support\Arr;
 
-class AopSigner extends AbstractModule implements Signer
+/**
+ * Class AopSigner
+ *
+ * @author qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay
+ */
+class AopSigner implements Signer
 {
+    /** @var Alipay */
+    protected $app;
+
     /** @var string rsa 私钥 */
     protected $rsaPrivateKey;
 
     /** @var string rsa 公钥 */
     protected $rsaPublicKey;
+
+    public function __construct(Alipay $alipay)
+    {
+        $this->app = $alipay;
+    }
 
     /**
      * 获取 rsa 私钥
@@ -123,6 +137,13 @@ class AopSigner extends AbstractModule implements Signer
         return $result;
     }
 
+    /**
+     * @param array $params
+     *
+     * @return bool
+     * @throws NotifyException
+     * @throws RsaPublicKeyException
+     */
     public function verifyNotifyParams(array $params)
     {
         if (empty($params['sign']) || empty($params['sign_type'])) {
@@ -136,5 +157,13 @@ class AopSigner extends AbstractModule implements Signer
         ksort($params);
 
         return $this->verify(urldecode(http_build_query($params)), $sign, $signType);
+    }
+
+    /**
+     * @return Alipay
+     */
+    public function getApp(): Alipay
+    {
+        return $this->app;
     }
 }

@@ -7,6 +7,13 @@
 
 namespace Qbhy\EasyAlipay\Kernel\Contracts;
 
+/**
+ * Interface Signer
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay\Kernel\Contracts
+ */
 interface Signer
 {
     public function sign(string $data, string $signType = 'RSA2'): string;

@@ -12,6 +12,13 @@ namespace Qbhy\EasyAlipay\Tools\Requests;
 
 use Qbhy\EasyAlipay\Kernel\AopRequest;
 
+/**
+ * Class SystemOauthTokenRequest
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay\Tools\Requests
+ */
 class SystemOauthTokenRequest extends AopRequest
 {
     /** @var string 值为authorization_code时，代表用code换取；值为refresh_token时，代表用refresh_token换取 */

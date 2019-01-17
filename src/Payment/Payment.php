@@ -11,6 +11,13 @@ use Qbhy\EasyAlipay\Exceptions\EasyAlipayException;
 use Qbhy\EasyAlipay\Kernel\AbstractModule;
 use Qbhy\EasyAlipay\Payment\Requests\TradeCreateRequest;
 
+/**
+ * Class Payment
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay\Payment
+ */
 class Payment extends AbstractModule
 {
 

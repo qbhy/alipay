@@ -10,6 +10,13 @@ namespace Qbhy\EasyAlipay\Payment\Requests;
 
 use Qbhy\EasyAlipay\Kernel\AopRequest;
 
+/**
+ * Class TradeQueryRequest
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay\Payment\Requests
+ */
 class TradeQueryRequest extends AopRequest
 {
     public function getApiName(): string

@@ -13,6 +13,13 @@ use Qbhy\EasyAlipay\Payment\Payment;
 use Qbhy\EasyAlipay\Tools\Tools;
 use Qbhy\EasyAlipay\User\User;
 
+/**
+ * Class ServiceProvider
+ *
+ * @author  qbhy <96qbhy@gmail.com>
+ *
+ * @package Qbhy\EasyAlipay
+ */
 class ServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $pimple)
