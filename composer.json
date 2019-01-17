@@ -1,0 +1,23 @@
+{
+    "name": "96qbhy/alipay",
+    "description": "支付宝sdk",
+    "authors": [
+        {
+            "name": "qbhy",
+            "email": "96qbhy@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Qbhy\\EasyAlipay\\": "src/"
+        },
+        "files": [
+            "src/Kernel/Helpers.php"
+        ]
+    },
+    "require": {
+        "ext-json": ">=1.0",
+        "php": ">=7.0",
+        "hanson/foundation-sdk": "^3.0"
+    }
+}

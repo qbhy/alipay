@@ -1,0 +1,8 @@
+*.DS_Store
+/vendor/
+/.idea
+/composer.lock
+/.php_cs.cache
+/*.php
+
+/alipay-sdk-PHP-3.3.1
