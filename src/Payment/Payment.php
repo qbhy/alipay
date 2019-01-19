@@ -10,6 +10,7 @@ namespace Qbhy\EasyAlipay\Payment;
 use Qbhy\EasyAlipay\Exceptions\EasyAlipayException;
 use Qbhy\EasyAlipay\Kernel\AbstractModule;
 use Qbhy\EasyAlipay\Payment\Requests\TradeCreateRequest;
+use Qbhy\EasyAlipay\Payment\Requests\TradeQueryRequest;
 
 /**
  * Class Payment
@@ -35,5 +36,16 @@ class Payment extends AbstractModule
     public function tradeCreate(string $outTradeNo, int $totalAmount, string $subject, $buyerId = null, array $optional = [])
     {
         return $this->client()->execute(new TradeCreateRequest($outTradeNo, $totalAmount, $subject, $buyerId, $optional));
+    }
+
+    /**
+     * @param array $optional
+     *
+     * @return array
+     * @throws EasyAlipayException
+     */
+    public function tradeQuery(array $optional)
+    {
+        return $this->client()->execute(new TradeQueryRequest($optional));
     }
 }

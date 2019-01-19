@@ -15,10 +15,21 @@ use Qbhy\EasyAlipay\Kernel\AopRequest;
  *
  * @author  qbhy <96qbhy@gmail.com>
  *
+ * @property $out_trade_no 商户订单号
+ * @property $out_trade    支付宝交易号
+ * @property $org_pid      银行间联模式下有用
+ *
  * @package Qbhy\EasyAlipay\Payment\Requests
  */
 class TradeQueryRequest extends AopRequest
 {
+    protected $optionalParamKeys = ['out_trade_no', 'trade_noe', 'org_pid',];
+
+    public function __construct(array $optional)
+    {
+        $this->optionalParams = $optional;
+    }
+
     public function getApiName(): string
     {
         return 'alipay.trade.query';
@@ -27,7 +38,7 @@ class TradeQueryRequest extends AopRequest
     public function getApiParams(): array
     {
         return [
-            'biz_content' => json_encode(['out_trade_no' => uniqid()])
+            'biz_content' => json_encode($this->optionalParams)
         ];
     }
 
