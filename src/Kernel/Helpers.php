@@ -76,7 +76,7 @@ if (!function_exists('aop_add_PKCS7_padding')) {
  *
  * @return string
  */
-if(!function_exists('aop_strip_PKSC7_padding')){
+if (!function_exists('aop_strip_PKSC7_padding')) {
     function aop_strip_PKSC7_padding($source)
     {
         $source = trim($source);
@@ -85,5 +85,29 @@ if(!function_exists('aop_strip_PKSC7_padding')){
         if ($num == 62) return $source;
         $source = substr($source, 0, -$num);
         return $source;
+    }
+}
+
+/**
+ * @param string $source
+ *
+ * @return string
+ */
+if (!function_exists('yuan2fen')) {
+    function yuan2fen($yuan): int
+    {
+        return intval($yuan * 100);
+    }
+}
+
+/**
+ * @param string $source
+ *
+ * @return string
+ */
+if (!function_exists('fen2yuan')) {
+    function fen2yuan($fen): float
+    {
+        return round($fen / 100, 2);
     }
 }

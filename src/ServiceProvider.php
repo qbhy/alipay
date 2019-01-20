@@ -9,6 +9,7 @@ namespace Qbhy\EasyAlipay;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use Qbhy\EasyAlipay\Fund\Fund;
 use Qbhy\EasyAlipay\Payment\Payment;
 use Qbhy\EasyAlipay\Tools\Tools;
 use Qbhy\EasyAlipay\User\User;
@@ -42,6 +43,10 @@ class ServiceProvider implements ServiceProviderInterface
 
         $pimple['payment'] = function (Alipay $alipay) {
             return new Payment($alipay);
+        };
+
+        $pimple['fund'] = function (Alipay $alipay) {
+            return new Fund($alipay);
         };
 
     }
