@@ -17,7 +17,7 @@ use Qbhy\EasyAlipay\Kernel\AbstractModule;
 /**
  * Class Fund
  *
- * @author  96qby <96qbhy@gmail.com>
+ * @author qbhy <96qbhy@gmail.com>
  * @package Qbhy\EasyAlipay\Fund
  */
 class Fund extends AbstractModule

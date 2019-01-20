@@ -8,7 +8,7 @@
 namespace Qbhy\EasyAlipay\Kernel\Contracts;
 
 /**
- * Interface Request
+ * Interface Requests
  *
  * @author  qbhy <96qbhy@gmail.com>
  *

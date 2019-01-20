@@ -9,6 +9,7 @@ namespace Qbhy\EasyAlipay;
 
 use Hanson\Foundation\Foundation;
 use Qbhy\EasyAlipay\Fund\Fund;
+use Qbhy\EasyAlipay\OpenApp\OpenApp;
 use Qbhy\EasyAlipay\Payment\Payment;
 use Qbhy\EasyAlipay\Tools\Tools;
 use Qbhy\EasyAlipay\User\User;
@@ -22,6 +23,7 @@ use Qbhy\EasyAlipay\User\User;
  * @property Tools     $tools
  * @property Payment   $payment
  * @property Fund      $fund
+ * @property OpenApp   $open_app
  *
  * @author  qbhy <96qbhy@gmail.com>
  *

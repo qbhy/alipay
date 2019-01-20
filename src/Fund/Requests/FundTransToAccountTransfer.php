@@ -19,7 +19,7 @@ use Qbhy\EasyAlipay\Kernel\AopRequest;
  * @property string $payee_real_name 收款方真实姓名
  * @property string $remark          转账备注
  *
- * @author  96qby <96qbhy@gmail.com>
+ * @author qbhy <96qbhy@gmail.com>
  * @package Qbhy\EasyAlipay\Fund\Requests
  */
 class FundTransToAccountTransfer extends AopRequest
