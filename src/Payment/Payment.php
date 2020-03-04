@@ -10,6 +10,7 @@ namespace Qbhy\EasyAlipay\Payment;
 
 use Qbhy\EasyAlipay\Exceptions\EasyAlipayException;
 use Qbhy\EasyAlipay\Kernel\AbstractModule;
+use Qbhy\EasyAlipay\Payment\Requests\TradeAppPayRequest;
 use Qbhy\EasyAlipay\Payment\Requests\TradeCreateRequest;
 use Qbhy\EasyAlipay\Payment\Requests\TradeQueryRequest;
 
@@ -24,12 +25,11 @@ class Payment extends AbstractModule
 {
 
     /**
-     *
-     * @param string $outTradeNo  商户订单号,64个字符以内、只能包含字母、数字、下划线；需保证在商户端不重复
-     * @param int    $totalAmount 订单总金额，单位为分，取值范围[1,10000000000](ps: sdk 会做 / 100 处理)
-     * @param string $subject     订单标题
-     * @param null   $buyerId     买家的支付宝唯一用户号（2088开头的16位纯数字）
-     * @param array  $optional    可选参数
+     * @param string $outTradeNo 商户订单号,64个字符以内、只能包含字母、数字、下划线；需保证在商户端不重复
+     * @param int $totalAmount 订单总金额，单位为分，取值范围[1,10000000000](ps: sdk 会做 / 100 处理)
+     * @param string $subject 订单标题
+     * @param null $buyerId 买家的支付宝唯一用户号（2088开头的16位纯数字）
+     * @param array $optional 可选参数
      *
      * @return array
      * @throws EasyAlipayException
@@ -48,5 +48,24 @@ class Payment extends AbstractModule
     public function tradeQuery(array $optional)
     {
         return $this->client()->execute(new TradeQueryRequest($optional));
+    }
+
+    /**
+     * alipay.trade.app.pay(app支付接口2.0)
+     * @param $outTradeNo
+     * @param $totalAmount
+     * @param $subject
+     * @param array $options
+     * @return array
+     * @throws \Qbhy\EasyAlipay\Exceptions\BizContentException
+     * @throws \Qbhy\EasyAlipay\Exceptions\CharsetException
+     * @throws \Qbhy\EasyAlipay\Exceptions\LackConfigOptionException
+     * @throws \Qbhy\EasyAlipay\Exceptions\RsaPrivateKeyException
+     * @throws \Qbhy\EasyAlipay\Exceptions\RsaPublicKeyException
+     * @throws \Qbhy\EasyAlipay\Exceptions\SignException
+     */
+    public function tradeAppPay($outTradeNo, $totalAmount, $subject, array $options = [])
+    {
+        return $this->client()->execute(new TradeAppPayRequest($outTradeNo, $totalAmount, $subject, $options));
     }
 }

@@ -96,7 +96,7 @@ if (!function_exists('aop_strip_PKSC7_padding')) {
 if (!function_exists('yuan2fen')) {
     function yuan2fen($yuan): int
     {
-        return intval($yuan * 100);
+        return (int)($yuan * 100);
     }
 }
 

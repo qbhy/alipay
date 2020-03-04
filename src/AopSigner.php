@@ -47,7 +47,7 @@ class AopSigner implements Signer
         if (!$this->rsaPrivateKey) {
             $key = $this->getApp()->getConfig('rsa_private_key');
             if (@file_exists($key)) {
-                if (!$this->rsaPrivateKey = openssl_get_privatekey(file_get_contents($key))) {
+                if (!$this->rsaPrivateKey = openssl_pkey_get_private(file_get_contents($key))) {
                     throw new RsaPrivateKeyException('您使用的私钥格式错误，请检查RSA私钥配置');
                 }
             } else {
