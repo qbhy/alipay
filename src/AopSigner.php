@@ -45,15 +45,15 @@ class AopSigner implements Signer
     protected function getRsaPrivateKey()
     {
         if (!$this->rsaPrivateKey) {
-            $key = $this->getApp()->getConfig('rsa_private_key');
+            $key = $this->app->getRsaPrivateKey();
             if (@file_exists($key)) {
                 if (!$this->rsaPrivateKey = openssl_pkey_get_private(file_get_contents($key))) {
                     throw new RsaPrivateKeyException('您使用的私钥格式错误，请检查RSA私钥配置');
                 }
             } else {
                 $this->rsaPrivateKey = "-----BEGIN RSA PRIVATE KEY-----\n" .
-                                       wordwrap($key, 64, "\n", true) .
-                                       "\n-----END RSA PRIVATE KEY-----";
+                    wordwrap($key, 64, "\n", true) .
+                    "\n-----END RSA PRIVATE KEY-----";
             }
         }
         return $this->rsaPrivateKey;
@@ -68,15 +68,15 @@ class AopSigner implements Signer
     protected function getRsaPublicKey()
     {
         if (!$this->rsaPublicKey) {
-            $key = $this->getApp()->getConfig('rsa_public_key');
+            $key = $this->app->getRsaPublicKey();
             if (@file_exists($key)) {
                 if (!$this->rsaPublicKey = openssl_get_publickey(file_get_contents($key))) {
                     throw new RsaPublicKeyException('支付宝RSA公钥错误。请检查公钥文件格式是否正确');
                 }
             } else {
                 $this->rsaPublicKey = "-----BEGIN PUBLIC KEY-----\n" .
-                                      wordwrap($key, 64, "\n", true) .
-                                      "\n-----END PUBLIC KEY-----";
+                    wordwrap($key, 64, "\n", true) .
+                    "\n-----END PUBLIC KEY-----";
             }
         }
         return $this->rsaPublicKey;
@@ -101,7 +101,7 @@ class AopSigner implements Signer
             openssl_sign($data, $sign, $privateKey);
         }
 
-        if ($path = $this->getApp()->getConfig('rsa_private_key') and file_exists($path)) {
+        if ($path = $this->app->getRsaPrivateKey() and file_exists($path)) {
             openssl_free_key($privateKey);
         }
         $sign = base64_encode($sign);
@@ -129,7 +129,7 @@ class AopSigner implements Signer
             $result = (openssl_verify($data, base64_decode($sign), $publicKey) === 1);
         }
 
-        if ($key = $this->getApp()->getConfig('rsa_public_key') and file_exists($key)) {
+        if ($key = $this->app->getRsaPublicKey() and file_exists($key)) {
             //释放资源
             openssl_free_key($publicKey);
         }
@@ -150,20 +150,12 @@ class AopSigner implements Signer
             throw new NotifyException('notify params invalid!');
         }
 
-        $sign     = base64_decode($params['sign']);
+        $sign = base64_decode($params['sign']);
         $signType = $params['sign_type'];
 
         $params = Arr::except($params, ['sign', 'sign_type']);
         ksort($params);
 
         return $this->verify(urldecode(http_build_query($params)), $sign, $signType);
-    }
-
-    /**
-     * @return Alipay
-     */
-    public function getApp(): Alipay
-    {
-        return $this->app;
     }
 }

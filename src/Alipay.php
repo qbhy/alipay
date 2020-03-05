@@ -19,11 +19,11 @@ use Qbhy\EasyAlipay\User\User;
  *
  * @property AopClient $aop_client
  * @property AopSigner $aop_signer
- * @property User      $user
- * @property Tools     $tools
- * @property Payment   $payment
- * @property Fund      $fund
- * @property OpenApp   $open_app
+ * @property User $user
+ * @property Tools $tools
+ * @property Payment $payment
+ * @property Fund $fund
+ * @property OpenApp $open_app
  *
  * @author  qbhy <96qbhy@gmail.com>
  *
@@ -35,5 +35,24 @@ class Alipay extends Foundation
         ServiceProvider::class,
     ];
 
+    public function getAesKey()
+    {
+        return $this->getConfig('aes_key');
+    }
+
+    public function getAppId()
+    {
+        return $this->getConfig('app_id');
+    }
+
+    public function getRsaPrivateKey()
+    {
+        return $this->getConfig('rsa_private_key');
+    }
+
+    public function getRsaPublicKey()
+    {
+        return $this->getConfig('rsa_public_key');
+    }
 
 }

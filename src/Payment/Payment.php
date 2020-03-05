@@ -43,7 +43,7 @@ class Payment extends AbstractModule
      * @param array $optional
      *
      * @return array
-     * @throws EasyAlipayException
+     * @throws
      */
     public function tradeQuery(array $optional)
     {
@@ -57,12 +57,7 @@ class Payment extends AbstractModule
      * @param $subject
      * @param array $options
      * @return array
-     * @throws \Qbhy\EasyAlipay\Exceptions\BizContentException
-     * @throws \Qbhy\EasyAlipay\Exceptions\CharsetException
-     * @throws \Qbhy\EasyAlipay\Exceptions\LackConfigOptionException
-     * @throws \Qbhy\EasyAlipay\Exceptions\RsaPrivateKeyException
-     * @throws \Qbhy\EasyAlipay\Exceptions\RsaPublicKeyException
-     * @throws \Qbhy\EasyAlipay\Exceptions\SignException
+     * @throws
      */
     public function tradeAppPay($outTradeNo, $totalAmount, $subject, array $options = [])
     {

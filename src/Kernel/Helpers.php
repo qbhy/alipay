@@ -9,18 +9,18 @@
  * 加密方法
  *
  * @param string $str
+ * @param string $secret
  *
  * @return string
  */
 if (!function_exists('aop_encrypt')) {
-    function aop_encrypt($str, $screct_key)
+    function aop_encrypt($str, $secret)
     {
         //AES, 128 模式加密数据 CBC
-        $screct_key  = base64_decode($screct_key);
+        $secret  = base64_decode($secret);
         $str         = trim($str);
         $str         = aop_add_PKCS7_padding($str);
-        $iv          = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC), 1);
-        $encrypt_str = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $screct_key, $str, MCRYPT_MODE_CBC);
+        $encrypt_str = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $secret, $str, MCRYPT_MODE_CBC);
         return base64_encode($encrypt_str);
     }
 }
@@ -33,13 +33,12 @@ if (!function_exists('aop_encrypt')) {
  * @return string
  */
 if (!function_exists('aop_decrypt')) {
-    function aop_decrypt($str, $screct_key)
+    function aop_decrypt($str, $secret)
     {
         //AES, 128 模式加密数据 CBC
         $str         = base64_decode($str);
-        $screct_key  = base64_decode($screct_key);
-        $iv          = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC), 1);
-        $encrypt_str = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $screct_key, $str, MCRYPT_MODE_CBC);
+        $secret  = base64_decode($secret);
+        $encrypt_str = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $secret, $str, MCRYPT_MODE_CBC);
         $encrypt_str = trim($encrypt_str);
 
         $encrypt_str = aop_strip_PKSC7_padding($encrypt_str);

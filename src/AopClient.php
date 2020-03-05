@@ -88,7 +88,7 @@ class AopClient extends AbstractAPI
     public function getEncryptKey()
     {
         if ($this->encryptKey === null) {
-            $this->encryptKey = $this->getApp()->getConfig('aes_key');
+            $this->encryptKey = $this->app->getAesKey();
         }
         return $this->encryptKey;
     }
@@ -99,17 +99,10 @@ class AopClient extends AbstractAPI
      * @param null    $appInfoAuthToken
      *
      * @return array
-     * @throws BizContentException
-     * @throws CharsetException
-     * @throws LackConfigOptionException
-     * @throws RsaPrivateKeyException
-     * @throws RsaPublicKeyException
-     * @throws SignException
+     * @throws
      */
     public function execute(Request $request, $authToken = null, $appInfoAuthToken = null)
     {
-        $app = $this->getApp();
-
         //  如果两者编码不一致，会出现签名验签或者乱码
         if (strcasecmp($this->fileCharset, $this->postCharset)) {
             // writeLog("本地文件字符集编码与表单提交编码不一致，请务必设置成一样，属性名分别为postCharset!");
@@ -117,7 +110,7 @@ class AopClient extends AbstractAPI
         }
 
         //组装系统参数
-        $sysParams["app_id"]    = $app->getConfig('app_id');
+        $sysParams["app_id"]    = $this->app->getAppId();
         $sysParams["method"]    = $request->getApiName();
         $sysParams["format"]    = AopClient::FORMAT;
         $sysParams["charset"]   = $this->postCharset;
@@ -382,7 +375,7 @@ class AopClient extends AbstractAPI
      */
     public function checkResponseSign(Request $request, $signData, $respArr)
     {
-        if (!is_null($signData)) {
+        if ($signData !== null) {
             if (empty($signData->sign) || empty($signData->signSourceData)) {
                 throw (new SignException(" check sign Fail! The reason : signData is Empty"));
             }
