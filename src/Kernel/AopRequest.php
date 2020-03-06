@@ -62,4 +62,13 @@ abstract class AopRequest implements Request
 
         throw new UndefinedPropertyException("Undefined property: {$name}");
     }
+
+    /**
+     * 是否只要参数
+     * @return bool
+     */
+    public function onlyParams(): bool
+    {
+        return false;
+    }
 }

@@ -54,17 +54,17 @@ class TradeAppPayRequest extends AopRequest
     /**
      * TradeCreateRequest constructor.
      *
-     * @param string $outTradeNo  商户订单号,64个字符以内、只能包含字母、数字、下划线；需保证在商户端不重复
-     * @param int    $totalAmount 订单总金额，单位为分，取值范围[1,10000000000](ps: sdk 会做 / 100 处理)
-     * @param string $subject     订单标题
-     * @param array  $optional    可选参数
+     * @param string $outTradeNo 商户订单号,64个字符以内、只能包含字母、数字、下划线；需保证在商户端不重复
+     * @param int $totalAmount 订单总金额，单位为分，取值范围[1,10000000000](ps: sdk 会做 / 100 处理)
+     * @param string $subject 订单标题
+     * @param array $optional 可选参数
      */
     public function __construct(string $outTradeNo, int $totalAmount, string $subject, array $optional = [])
     {
         $this->bizContent = [
             'out_trade_no' => $outTradeNo,
             'total_amount' => $totalAmount / 100,
-            'subject'      => $subject,
+            'subject' => $subject,
         ];
 
         $this->optionalParams = $optional;
@@ -75,12 +75,9 @@ class TradeAppPayRequest extends AopRequest
         return 'alipay.trade.app.pay';
     }
 
-    /**
-     * @return array
-     */
-    public function getBizContent(): array
+    public function onlyParams(): bool
     {
-        return $this->bizContent;
+        return true;
     }
 
     /**

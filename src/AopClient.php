@@ -16,6 +16,7 @@ use Qbhy\EasyAlipay\Exceptions\RequestException;
 use Qbhy\EasyAlipay\Exceptions\RsaPrivateKeyException;
 use Qbhy\EasyAlipay\Exceptions\RsaPublicKeyException;
 use Qbhy\EasyAlipay\Exceptions\SignException;
+use Qbhy\EasyAlipay\Kernel\AopRequest;
 use Qbhy\EasyAlipay\Kernel\EncryptParseItem;
 use Qbhy\EasyAlipay\Kernel\Contracts\Request;
 use Qbhy\EasyAlipay\Kernel\SignData;
@@ -95,8 +96,8 @@ class AopClient extends AbstractAPI
 
     /**
      * @param Request $request
-     * @param null    $authToken
-     * @param null    $appInfoAuthToken
+     * @param null $authToken
+     * @param null $appInfoAuthToken
      *
      * @return array
      * @throws
@@ -110,15 +111,15 @@ class AopClient extends AbstractAPI
         }
 
         //组装系统参数
-        $sysParams["app_id"]    = $this->app->getAppId();
-        $sysParams["method"]    = $request->getApiName();
-        $sysParams["format"]    = AopClient::FORMAT;
-        $sysParams["charset"]   = $this->postCharset;
+        $sysParams["app_id"] = $this->app->getAppId();
+        $sysParams["method"] = $request->getApiName();
+        $sysParams["format"] = AopClient::FORMAT;
+        $sysParams["charset"] = $this->postCharset;
         $sysParams["sign_type"] = $this->signType;
         // sign
-        $sysParams["timestamp"]      = date("Y-m-d H:i:s");
-        $sysParams["version"]        = $request->getVersion($this->version);
-        $sysParams["auth_token"]     = $authToken;
+        $sysParams["timestamp"] = date("Y-m-d H:i:s");
+        $sysParams["version"] = $request->getVersion($this->version);
+        $sysParams["auth_token"] = $authToken;
         $sysParams["app_auth_token"] = $appInfoAuthToken;
 
         //获取业务参数
@@ -134,7 +135,7 @@ class AopClient extends AbstractAPI
                 throw (new LackConfigOptionException("encryptType and encryptKey must not null! "))->setName('aes_key');
             }
             // 执行加密
-            $enCryptContent           = aop_encrypt($apiParams['biz_content'], $encryptKey);
+            $enCryptContent = aop_encrypt($apiParams['biz_content'], $encryptKey);
             $apiParams['biz_content'] = $enCryptContent;
         }
 
@@ -143,6 +144,10 @@ class AopClient extends AbstractAPI
 
         $requestUrl = $this->gatewayUrl . '?' . http_build_query($sysParams);
 
+        if ($request->onlyParams()) {
+            return array_merge($sysParams, $apiParams);
+        }
+
         //发起HTTP请求
         $resp = $this->getHttp()->request('POST', $requestUrl, [RequestOptions::FORM_PARAMS => $apiParams])->getBody()->__toString();
 
@@ -150,7 +155,7 @@ class AopClient extends AbstractAPI
         $r = iconv($this->postCharset, $this->fileCharset . "//IGNORE", $resp);
 
         $signData = null;
-        $respArr  = @json_decode($r, true);
+        $respArr = @json_decode($r, true);
 
         if (null !== $respArr) {
             $signData = $this->parserJSONSignData($request, $resp, $respArr);
@@ -163,7 +168,7 @@ class AopClient extends AbstractAPI
         if ($request->isNeedEncrypt()) {
             $resp = $this->encryptJSONSignSource($request, $resp);
             // 将返回结果转换本地文件编码
-            $r       = iconv($this->postCharset, $this->fileCharset . "//IGNORE", $resp);
+            $r = iconv($this->postCharset, $this->fileCharset . "//IGNORE", $resp);
             $respArr = @json_decode($r, true);
         }
 
@@ -184,7 +189,7 @@ class AopClient extends AbstractAPI
     }
 
     /**
-     * @param array  $params
+     * @param array $params
      * @param string $signType
      *
      * @return string
@@ -204,7 +209,7 @@ class AopClient extends AbstractAPI
     {
         ksort($params);
         $stringToBeSigned = "";
-        $i                = 0;
+        $i = 0;
         foreach ($params as $k => $v) {
             if (false === empty($v) && "@" != substr($v, 0, 1)) {
                 // 转换成目标字符集
@@ -255,7 +260,7 @@ class AopClient extends AbstractAPI
         ksort($params);
 
         $stringToBeSigned = "";
-        $i                = 0;
+        $i = 0;
         foreach ($params as $k => $v) {
             if (false === empty($v) && "@" != substr($v, 0, 1)) {
 
@@ -309,15 +314,15 @@ class AopClient extends AbstractAPI
     /**
      * @param Request $request
      * @param         $responseContent
-     * @param array   $responseJSON
+     * @param array $responseJSON
      *
      * @return string
      */
     function parserJSONSignSource(Request $request, $responseContent, $responseJSON)
     {
         $rootNodeName = $this->getResponseNodeName($request);
-        $rootIndex    = strpos($responseContent, $rootNodeName);
-        $errorIndex   = strpos($responseContent, $this->ERROR_RESPONSE);
+        $rootIndex = strpos($responseContent, $rootNodeName);
+        $errorIndex = strpos($responseContent, $this->ERROR_RESPONSE);
 
         if (isset($responseJSON[$rootNodeName])) {
             return $this->parserJSONSource($responseContent, $rootNodeName, $rootIndex);
@@ -336,10 +341,10 @@ class AopClient extends AbstractAPI
     public function parserJSONSource($responseContent, $nodeName, $nodeIndex)
     {
         $signDataStartIndex = $nodeIndex + strlen($nodeName) + 2;
-        $signIndex          = strrpos($responseContent, "\"" . $this->SIGN_NODE_NAME . "\"");
+        $signIndex = strrpos($responseContent, "\"" . $this->SIGN_NODE_NAME . "\"");
         // 签名前-逗号
         $signDataEndIndex = $signIndex - 1;
-        $indexLen         = $signDataEndIndex - $signDataStartIndex;
+        $indexLen = $signDataEndIndex - $signDataStartIndex;
         if ($indexLen < 0) {
             return null;
         }
@@ -357,8 +362,8 @@ class AopClient extends AbstractAPI
     {
         $signData = null;
         if (isset($responseJSON['sign'])) {
-            $signData                 = new SignData();
-            $signData->sign           = $responseJSON['sign'] ?? null;
+            $signData = new SignData();
+            $signData->sign = $responseJSON['sign'] ?? null;
             $signData->signSourceData = $this->parserJSONSignSource($request, $responseContent, $responseJSON);
         }
         return $signData;
@@ -366,7 +371,7 @@ class AopClient extends AbstractAPI
 
 
     /**
-     * @param Request       $request
+     * @param Request $request
      * @param SignData|null $signData
      * @param               $respArr
      *
@@ -388,7 +393,7 @@ class AopClient extends AbstractAPI
                 if (!$checkResult) {
                     if (strpos($signData->signSourceData, "\\/") > 0) {
                         $signData->signSourceData = str_replace("\\/", "/", $signData->signSourceData);
-                        $checkResult              = $this->getApp()->aop_signer->verify($signData->signSourceData, $signData->sign, $this->signType);
+                        $checkResult = $this->getApp()->aop_signer->verify($signData->signSourceData, $signData->sign, $this->signType);
                         if (!$checkResult) {
                             throw new SignException("check sign Fail! [sign=" . $signData->sign . ", signSourceData=" . $signData->signSourceData . "]");
                         }
@@ -411,7 +416,7 @@ class AopClient extends AbstractAPI
         $parseItem = $this->parserEncryptJSONSignSource($request, $responseContent);
 
         $bodyIndexContent = substr($responseContent, 0, $parseItem->startIndex);
-        $bodyEndContent   = substr($responseContent, $parseItem->endIndex, strlen($responseContent) + 1 - $parseItem->endIndex);
+        $bodyEndContent = substr($responseContent, $parseItem->endIndex, strlen($responseContent) + 1 - $parseItem->endIndex);
 
         $bizContent = aop_decrypt($parseItem->encryptContent, $this->encryptKey);
         return $bodyIndexContent . $bizContent . $bodyEndContent;
@@ -427,7 +432,7 @@ class AopClient extends AbstractAPI
     {
         $rootNodeName = $this->getResponseNodeName($request);
 
-        $rootIndex  = strpos($responseContent, $rootNodeName);
+        $rootIndex = strpos($responseContent, $rootNodeName);
         $errorIndex = strpos($responseContent, $this->ERROR_RESPONSE);
 
         if ($rootIndex > 0) {
@@ -449,7 +454,7 @@ class AopClient extends AbstractAPI
     private function parserEncryptJSONItem($responseContent, $nodeName, $nodeIndex): EncryptParseItem
     {
         $signDataStartIndex = $nodeIndex + strlen($nodeName) + 2;
-        $signIndex          = strpos($responseContent, "\"" . $this->SIGN_NODE_NAME . "\"");
+        $signIndex = strpos($responseContent, "\"" . $this->SIGN_NODE_NAME . "\"");
         // 签名前-逗号
         $signDataEndIndex = $signIndex - 1;
 
@@ -457,13 +462,13 @@ class AopClient extends AbstractAPI
             $signDataEndIndex = strlen($responseContent) - 1;
         }
 
-        $indexLen   = $signDataEndIndex - $signDataStartIndex;
+        $indexLen = $signDataEndIndex - $signDataStartIndex;
         $encContent = substr($responseContent, $signDataStartIndex + 1, $indexLen - 2);
 
-        $encryptParseItem                 = new EncryptParseItem();
+        $encryptParseItem = new EncryptParseItem();
         $encryptParseItem->encryptContent = $encContent;
-        $encryptParseItem->startIndex     = $signDataStartIndex;
-        $encryptParseItem->endIndex       = $signDataEndIndex;
+        $encryptParseItem->startIndex = $signDataStartIndex;
+        $encryptParseItem->endIndex = $signDataEndIndex;
 
         return $encryptParseItem;
 

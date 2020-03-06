@@ -20,6 +20,8 @@ interface Request
 
     public function isNeedEncrypt(): bool;
 
+    public function onlyParams(): bool;
+
     public function getApiParams(): array;
 
     public function getVersion(string $default): string;

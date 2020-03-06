@@ -104,8 +104,7 @@ class AopSigner implements Signer
         if ($path = $this->app->getRsaPrivateKey() and file_exists($path)) {
             openssl_free_key($privateKey);
         }
-        $sign = base64_encode($sign);
-        return $sign;
+        return base64_encode($sign);
     }
 
     /**
