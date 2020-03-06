@@ -20,7 +20,6 @@
         "ext-openssl": "*",
         "php": ">=7.0",
         "hanson/foundation-sdk": "^3.0",
-        "ext-iconv": "*",
-        "ext-mcrypt": "*"
+        "ext-iconv": "*"
     }
 }
