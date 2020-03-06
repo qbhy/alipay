@@ -46,7 +46,7 @@ class AopClient extends AbstractAPI
     protected $signType = 'RSA2';
 
     /** @var string sdk 版本 */
-    protected $alipaySdkVersion = 'alipay-sdk-php-20180705';
+    protected $alipaySdkVersion = '96qbhy/alipay';
 
     /** @var string 网关 */
     protected $gatewayUrl = 'https://openapi.alipay.com/gateway.do';
@@ -186,6 +186,38 @@ class AopClient extends AbstractAPI
         }
 
         throw new RequestException('request exception!', $resp);
+    }
+
+    public function sdkExecute(Request $request, $appAuthToken = null)
+    {
+        $params['app_id'] = $this->app->getAppId();
+        $params['method'] = $request->getApiName();
+        $params['format'] = 'json';
+        $params['sign_type'] = $this->signType;
+        $params['timestamp'] = date("Y-m-d H:i:s");
+        $params['alipay_sdk'] = $this->alipaySdkVersion;
+        $params['charset'] = $this->postCharset;
+
+        $params['version'] = $request->getApiVersion();
+
+        if ($notify_url = $request->getNotifyUrl()) {
+            $params['notify_url'] = $notify_url;
+        }
+
+        $params['app_auth_token'] = $appAuthToken;
+
+        $dict = $request->getApiParams();
+        $params['biz_content'] = $dict['biz_content'];
+
+        ksort($params);
+
+        $params['sign'] = $this->generateSign($params, $this->signType);
+
+        foreach ($params as &$value) {
+            $value = $this->characet($value, $params['charset']);
+        }
+
+        return http_build_query($params);
     }
 
     /**
@@ -472,6 +504,19 @@ class AopClient extends AbstractAPI
 
         return $encryptParseItem;
 
+    }
+
+    private function characet($data, string $targetCharset)
+    {
+        if (!empty($data)) {
+            $fileType = $this->fileCharset;
+            if (strcasecmp($fileType, $targetCharset) != 0) {
+                $data = mb_convert_encoding($data, $targetCharset, $fileType);
+                //				$data = iconv($fileType, $targetCharset.'//IGNORE', $data);
+            }
+        }
+
+        return $data;
     }
 
 }

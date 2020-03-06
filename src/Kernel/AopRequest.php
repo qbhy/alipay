@@ -63,6 +63,16 @@ abstract class AopRequest implements Request
         throw new UndefinedPropertyException("Undefined property: {$name}");
     }
 
+    public function getApiVersion(): string
+    {
+        return $this->version;
+    }
+
+    public function getNotifyUrl(): ?string
+    {
+        return null;
+    }
+
     /**
      * 是否只要参数
      * @return bool

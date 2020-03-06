@@ -56,11 +56,11 @@ class Payment extends AbstractModule
      * @param $totalAmount
      * @param $subject
      * @param array $options
-     * @return array
+     * @return string
      * @throws
      */
     public function tradeAppPay($outTradeNo, $totalAmount, $subject, array $options = [])
     {
-        return $this->client()->execute(new TradeAppPayRequest($outTradeNo, $totalAmount, $subject, $options));
+        return $this->client()->sdkExecute(new TradeAppPayRequest($outTradeNo, $totalAmount, $subject, $options));
     }
 }

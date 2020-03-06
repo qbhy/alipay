@@ -24,6 +24,10 @@ interface Request
 
     public function getApiParams(): array;
 
+    public function getApiVersion(): string;
+
+    public function getNotifyUrl(): ?string;
+
     public function getVersion(string $default): string;
 
 }

@@ -18,7 +18,7 @@
     "require": {
         "ext-json": ">=1.0",
         "ext-openssl": "*",
-        "php": ">=7.0",
+        "php": ">=7.1",
         "hanson/foundation-sdk": "^3.0",
         "ext-iconv": "*"
     }
